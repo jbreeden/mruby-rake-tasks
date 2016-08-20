@@ -15,3 +15,7 @@ rake mruby:gen:build_config  # Copies $MRUBY_HOME/build_config.rb into this proj
 ## Installation
 
 Clone this repo & `rake install`. (Haven't published to rubygems yet)
+
+## Usage
+
+In your mrbgem source, define a Rakefile and add `require 'mruby/rake/tasks'`.
