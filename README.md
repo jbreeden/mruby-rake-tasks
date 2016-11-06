@@ -1,7 +1,11 @@
 # MRuby Rake Tasks
 
-Provides tasks for building mruby. You define a `build_config.rb` file for building mruby,
-tell it where mruby is checked out, and it will build your mruby into `./build`.
+This gem provides a few rake tasks that invert the control of the mruby build process.
+
+Rather than modifying the `build_config.rb` in your mruby checkout to define the gems you'd
+like to include, you maintain a local `build_config.rb` file in the gem you're developing.
+Then, use the rake tasks from this gem to build mruby, and the artifacts will be output
+to the mrbgem's `./build` directory.
 
 Tasks include:
 
