@@ -1,10 +1,7 @@
 require "mruby/rake/tasks/version"
 
-# When calling mruby rake tasks, use the local build_config.rb
-ENV['MRUBY_CONFIG'] = ENV['MRUBY_CONFIG'] || Dir.pwd + '/build_config.rb'
-if !File.exists?(ENV['MRUBY_CONFIG'])
-  $stderr.puts 'Could not find build_config.rb, plese set $MRUBY_CONFIG'
-  exit 1
+def gen_build_config
+  cp "#{ENV['MRUBY_HOME']}/build_config.rb", './build_config.rb'
 end
 
 if !ENV['MRUBY_HOME']
@@ -16,6 +13,12 @@ end
 if !ENV['MRUBY_HOME'] || !File.directory?(ENV['MRUBY_HOME'])
   $stderr.puts 'Unable to find MRuby. Please set $MRUBY_HOME.'
   exit 1
+end
+
+# When calling mruby rake tasks, use the local build_config.rb
+ENV['MRUBY_CONFIG'] = ENV['MRUBY_CONFIG'] || Dir.pwd + '/build_config.rb'
+if !File.exists?(ENV['MRUBY_CONFIG'])
+  gen_build_config
 end
 
 namespace :mruby do
@@ -54,7 +57,7 @@ namespace :mruby do
   namespace :gen do
     desc 'Copies $MRUBY_HOME/build_config.rb into this project'
     task :build_config do
-      cp "#{ENV['MRUBY_HOME']}/build_config.rb", './build_config.rb'
+      gen_build_config
     end
   end
 end
