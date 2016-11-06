@@ -14,7 +14,12 @@ rake mruby:gen:build_config  # Copies $MRUBY_HOME/build_config.rb into this proj
 
 ## Installation
 
-Clone this repo & `rake install`. (Haven't published to rubygems yet)
+This gem isn't published to RubyGems yet. For now, you can just clone this repo.
+
+From there, you have two options:
+
+1. Use Bundler, and add a line line `gem 'mruby-rake-tasks', path: 'path/to/your/clone'` to your Gemfile.
+2. Install mruby-rake-tasks in the system gem cache with `cd path/to/your/clone && rake install`
 
 ## Usage
 
