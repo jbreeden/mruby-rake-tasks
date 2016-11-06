@@ -9,7 +9,7 @@ if !ENV['MRUBY_HOME']
   ENV['MRUBY_HOME'] ||= Dir.pwd + '/../mruby'
 end
 
-# Still no luck? Raise hell!
+# Still no luck? Raise hell! 
 if !ENV['MRUBY_HOME'] || !File.directory?(ENV['MRUBY_HOME'])
   $stderr.puts 'Unable to find MRuby. Please set $MRUBY_HOME.'
   exit 1
@@ -21,6 +21,21 @@ if !File.exists?(ENV['MRUBY_CONFIG'])
   gen_build_config
 end
 
+def clean_sh(cmd)
+  env_string = "MRUBY_HOME=#{ENV['MRUBY_HOME']} MRUBY_CONFIG=#{ENV['MRUBY_CONFIG']}"
+  procedure = proc { 
+    sh("#{env_string} #{cmd}") 
+  }
+
+  if Object.const_defined?(:Bundler)
+    Bundler.with_clean_env {
+      procedure.call()
+    }
+  else
+    procedure.call()
+  end
+end
+
 namespace :mruby do
   desc 'Clean the mruby build artifacts'
   task :clean do
@@ -28,7 +43,7 @@ namespace :mruby do
       rm_rf 'build'
     end
     cd ENV['MRUBY_HOME'] {
-      sh 'rake clean'
+      clean_sh 'rake clean'
     }
   end
 
@@ -38,7 +53,7 @@ namespace :mruby do
       rm_rf 'build'
     end
     cd ENV['MRUBY_HOME'] {
-      sh 'rake deep_clean'
+      clean_sh 'rake deep_clean'
     }
   end
 
@@ -49,7 +64,7 @@ namespace :mruby do
     end
     mkdir 'build'
     cd ENV['MRUBY_HOME'] {
-      sh 'rake default'
+      clean_sh 'rake default'
     }
     cp_r Dir["#{ENV['MRUBY_HOME']}/build/host/{bin,lib}"], 'build'
   end
