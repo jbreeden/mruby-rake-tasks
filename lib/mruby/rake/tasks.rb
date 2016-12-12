@@ -1,5 +1,3 @@
-require "mruby/rake/tasks/version"
-
 def gen_build_config
   cp "#{ENV['MRUBY_HOME']}/build_config.rb", './build_config.rb'
 end

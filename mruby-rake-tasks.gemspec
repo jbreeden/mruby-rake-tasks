@@ -1,11 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'mruby/rake/tasks/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "mruby-rake-tasks"
-  spec.version       = MRuby::Rake::Tasks::VERSION
+  spec.version       = '0.0.0'
   spec.authors       = ["jbreeden"]
   spec.email         = ["jared.breeden@gmail.com"]
 
