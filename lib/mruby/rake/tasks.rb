@@ -19,21 +19,6 @@ if !File.exists?(ENV['MRUBY_CONFIG'])
   gen_build_config
 end
 
-def clean_sh(cmd)
-  env_string = "MRUBY_HOME=#{ENV['MRUBY_HOME']} MRUBY_CONFIG=#{ENV['MRUBY_CONFIG']}"
-  procedure = proc { 
-    sh("#{env_string} #{cmd}") 
-  }
-
-  if Object.const_defined?(:Bundler)
-    Bundler.with_clean_env {
-      procedure.call()
-    }
-  else
-    procedure.call()
-  end
-end
-
 namespace :mruby do
   desc 'Clean the mruby build artifacts'
   task :clean do
@@ -41,7 +26,7 @@ namespace :mruby do
       rm_rf 'build'
     end
     cd ENV['MRUBY_HOME'] {
-      clean_sh 'rake clean'
+      sh 'rake clean'
     }
   end
 
@@ -51,7 +36,7 @@ namespace :mruby do
       rm_rf 'build'
     end
     cd ENV['MRUBY_HOME'] {
-      clean_sh 'rake deep_clean'
+      sh 'rake deep_clean'
     }
   end
 
@@ -62,7 +47,7 @@ namespace :mruby do
     end
     mkdir 'build'
     cd ENV['MRUBY_HOME'] {
-      clean_sh 'rake default'
+      sh 'rake default'
     }
     cp_r Dir["#{ENV['MRUBY_HOME']}/build/host/{bin,lib}"], 'build'
   end
